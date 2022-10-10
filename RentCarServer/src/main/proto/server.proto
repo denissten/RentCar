@@ -1,0 +1,35 @@
+syntax = "proto3";
+package com.grpc;
+import "google/protobuf/empty.proto";
+
+message Car{
+  int32 id = 1;
+  string model = 2;
+  int32 mileage = 3;
+  string condition = 4;
+  int32 price = 5;
+  bool rent = 6;
+  int32 owner = 7;
+}
+
+message Response{
+  string header = 1;
+  string data = 2;
+}
+
+message User{
+  int32 id = 1;
+  string login = 2;
+  string password = 3;
+}
+
+service RentCar{
+  rpc connect(User) returns (stream Response);
+  rpc disconnect(Response) returns (google.protobuf.Empty);
+  rpc getAllCars(google.protobuf.Empty) returns (stream Car);
+  rpc addCarToServer(Car) returns (google.protobuf.Empty);
+  rpc editCar(Car) returns (google.protobuf.Empty);
+  rpc startRent(Response) returns (Response);
+  rpc endRent(Response) returns (Response);
+  rpc regAcc(User) returns (Response);
+}
